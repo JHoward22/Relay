@@ -5,6 +5,7 @@ import { AppHeader } from '@/components/relay/AppHeader';
 import { PrimaryButton, SecondaryButton } from '@/components/relay/Buttons';
 import { FormField } from '@/components/relay/FormField';
 import { GlassCard } from '@/components/relay/GlassCard';
+import { LiquidBackdrop } from '@/components/relay/LiquidBackdrop';
 import { ListRow } from '@/components/relay/ListRow';
 import { SectionHeader } from '@/components/relay/SectionHeader';
 import { ds } from '@/constants/design-system';
@@ -37,6 +38,7 @@ export default function RelayReviewScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <LiquidBackdrop />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <AppHeader title="Review" subtitle="Confirm each item before saving" onBack={() => router.back()} />
 
@@ -93,7 +95,7 @@ export default function RelayReviewScreen() {
           label="Confirm and Add"
           onPress={() => {
             addFromRelay(items);
-            router.replace('/(tabs)');
+            router.replace('/');
           }}
         />
         <SecondaryButton label="Back" onPress={() => router.back()} />

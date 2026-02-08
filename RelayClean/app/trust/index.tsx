@@ -4,7 +4,8 @@ import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import { AppHeader } from '@/components/relay/AppHeader';
 import { GlassCard } from '@/components/relay/GlassCard';
 import { ListRow } from '@/components/relay/ListRow';
-import { SectionTitle } from '@/components/relay/SectionTitle';
+import { LiquidBackdrop } from '@/components/relay/LiquidBackdrop';
+import { SectionHeader } from '@/components/relay/SectionHeader';
 import { ds } from '@/constants/design-system';
 
 const GUARDRAILS = [
@@ -19,6 +20,7 @@ export default function TrustScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <LiquidBackdrop />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <AppHeader
           title="How Relay uses AI"
@@ -27,7 +29,7 @@ export default function TrustScreen() {
         />
 
         <GlassCard blur>
-          <SectionTitle title="Your control" />
+          <SectionHeader title="Your control" />
           {GUARDRAILS.map((line) => (
             <ListRow key={line} icon="shield-checkmark-outline" label={line} variant="compact" />
           ))}

@@ -4,6 +4,7 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { PrimaryButton, SecondaryButton } from '@/components/relay/Buttons';
 import { GlassCard } from '@/components/relay/GlassCard';
+import { LiquidBackdrop } from '@/components/relay/LiquidBackdrop';
 import { ds } from '@/constants/design-system';
 
 export default function OnboardingVoiceScreen() {
@@ -11,6 +12,7 @@ export default function OnboardingVoiceScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <LiquidBackdrop />
       <View style={styles.content}>
         <GlassCard blur style={styles.card}>
           <Text style={styles.title}>The easiest way to use Relay is to just talk.</Text>

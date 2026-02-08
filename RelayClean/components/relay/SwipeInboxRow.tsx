@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { Ionicons } from '@expo/vector-icons';
 import { ds } from '@/constants/design-system';
 import { ListRow } from './ListRow';
+import { BubbleChip } from './BubbleChip';
 
 type SwipeInboxRowProps = {
   icon: keyof typeof Ionicons.glyphMap;
@@ -30,17 +31,8 @@ export function SwipeInboxRow({ icon, label, body, onPress, onDone, onSnooze }: 
       rightThreshold={32}
       renderRightActions={() => (
         <View style={styles.actions}>
-          <Pressable style={[styles.actionButton, styles.doneButton]} onPress={() => closeAndRun(onDone)}>
-            <Ionicons name="checkmark" size={16} color="#FFFFFF" />
-            <Text style={styles.actionText}>Done</Text>
-          </Pressable>
-          <Pressable
-            style={[styles.actionButton, styles.snoozeButton]}
-            onPress={() => closeAndRun(onSnooze)}
-          >
-            <Ionicons name="time-outline" size={16} color="#FFFFFF" />
-            <Text style={styles.actionText}>Later</Text>
-          </Pressable>
+          <BubbleChip icon="checkmark" label="Done" tone="success" onPress={() => closeAndRun(onDone)} />
+          <BubbleChip icon="time-outline" label="Later" tone="primary" onPress={() => closeAndRun(onSnooze)} />
         </View>
       )}
     >
@@ -54,26 +46,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: ds.spacing.s8,
     marginLeft: ds.spacing.s8,
-  },
-  actionButton: {
-    width: 76,
-    borderRadius: ds.radius.card,
     alignItems: 'center',
-    justifyContent: 'center',
-    gap: ds.spacing.s4,
-    ...ds.shadow.soft,
-  },
-  doneButton: {
-    backgroundColor: ds.colors.success,
-  },
-  snoozeButton: {
-    backgroundColor: ds.colors.primary,
-  },
-  actionText: {
-    fontFamily: ds.font,
-    fontSize: 12,
-    lineHeight: 16,
-    fontWeight: '600',
-    color: '#FFFFFF',
   },
 });

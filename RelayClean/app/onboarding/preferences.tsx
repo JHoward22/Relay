@@ -3,6 +3,7 @@ import React from 'react';
 import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { PrimaryButton } from '@/components/relay/Buttons';
 import { GlassCard } from '@/components/relay/GlassCard';
+import { LiquidBackdrop } from '@/components/relay/LiquidBackdrop';
 import { SectionTitle } from '@/components/relay/SectionTitle';
 import { ds } from '@/constants/design-system';
 import { useOnboardingSession } from '@/hooks/use-onboarding-session';
@@ -15,6 +16,7 @@ export default function OnboardingPreferencesScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <LiquidBackdrop />
       <View style={styles.content}>
         <GlassCard>
           <SectionTitle title="What should Relay help you manage?" />

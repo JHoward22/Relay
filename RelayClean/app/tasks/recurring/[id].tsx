@@ -5,8 +5,10 @@ import { AppHeader } from '@/components/relay/AppHeader';
 import { PrimaryButton, SecondaryButton } from '@/components/relay/Buttons';
 import { FormField } from '@/components/relay/FormField';
 import { GlassCard } from '@/components/relay/GlassCard';
+import { LiquidBackdrop } from '@/components/relay/LiquidBackdrop';
 import { ListRow } from '@/components/relay/ListRow';
 import { SectionHeader } from '@/components/relay/SectionHeader';
+import { TalkToRelaySheet } from '@/components/relay/TalkToRelaySheet';
 import { ds } from '@/constants/design-system';
 import { useRelayStore } from '@/store/relay-store';
 
@@ -18,6 +20,7 @@ export default function RecurringDetailScreen() {
   const task = useMemo(() => state.tasks.find((entry) => entry.id === id), [id, state.tasks]);
   const [cadence, setCadence] = useState(task?.cadence ?? 'Weekly');
   const [nextRun, setNextRun] = useState(task?.dueDate ?? 'Tomorrow');
+  const [talkOpen, setTalkOpen] = useState(false);
 
   if (!task) {
     return (
@@ -29,6 +32,7 @@ export default function RecurringDetailScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <LiquidBackdrop />
       <ScrollView contentContainerStyle={styles.content}>
         <AppHeader title="Recurring Detail" subtitle={task.title} onBack={() => router.back()} />
 
@@ -65,7 +69,10 @@ export default function RecurringDetailScreen() {
             router.replace('/tasks/recurring');
           }}
         />
+        <SecondaryButton label="Ask Relay" onPress={() => setTalkOpen(true)} />
       </ScrollView>
+
+      <TalkToRelaySheet visible={talkOpen} onClose={() => setTalkOpen(false)} />
     </SafeAreaView>
   );
 }

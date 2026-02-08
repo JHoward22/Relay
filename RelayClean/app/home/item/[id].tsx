@@ -5,6 +5,7 @@ import { AppHeader } from '@/components/relay/AppHeader';
 import { PrimaryButton, SecondaryButton } from '@/components/relay/Buttons';
 import { FormField } from '@/components/relay/FormField';
 import { GlassCard } from '@/components/relay/GlassCard';
+import { LiquidBackdrop } from '@/components/relay/LiquidBackdrop';
 import { ListRow } from '@/components/relay/ListRow';
 import { SectionHeader } from '@/components/relay/SectionHeader';
 import { ds } from '@/constants/design-system';
@@ -61,6 +62,7 @@ export default function HomeItemDetailScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <LiquidBackdrop />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <AppHeader title="Item Detail" subtitle={item.type.toUpperCase()} onBack={() => router.back()} />
 
@@ -72,11 +74,49 @@ export default function HomeItemDetailScreen() {
 
         <GlassCard>
           <SectionHeader title="Metadata" />
-          <ListRow variant="compact" label="Category" rightText={sourceTask?.category ?? item.type} />
-          <ListRow variant="compact" label="Date / time" rightText={sourceEvent ? `${sourceEvent.date} · ${sourceEvent.time}` : item.subtitle} />
-          {sourceTask?.assignedTo ? <ListRow variant="compact" label="Assigned" rightText={sourceTask.assignedTo} /> : null}
-          {sourceEvent?.location ? <ListRow variant="compact" label="Location" rightText={sourceEvent.location} /> : null}
-          {item.type === 'message' ? <ListRow variant="compact" label="Contact" rightText="Emma's teacher" /> : null}
+          <ListRow
+            variant="compact"
+            label="Category"
+            rightText={sourceTask?.category ?? item.type}
+            onPress={() => {
+              if (sourceTask) router.push(`/tasks/${sourceTask.id}`);
+              else if (sourceEvent) router.push(`/calendar/event/${sourceEvent.id}`);
+              else if (item.type === 'message') router.push('/home/follow-ups');
+            }}
+          />
+          <ListRow
+            variant="compact"
+            label="Date / time"
+            rightText={sourceEvent ? `${sourceEvent.date} · ${sourceEvent.time}` : item.subtitle}
+            onPress={() => {
+              if (sourceEvent) router.push(`/calendar/event/${sourceEvent.id}`);
+              else if (sourceTask) router.push(`/tasks/${sourceTask.id}`);
+            }}
+          />
+          {sourceTask?.assignedTo ? (
+            <ListRow
+              variant="compact"
+              label="Assigned"
+              rightText={sourceTask.assignedTo}
+              onPress={() => router.push('/family')}
+            />
+          ) : null}
+          {sourceEvent?.location ? (
+            <ListRow
+              variant="compact"
+              label="Location"
+              rightText={sourceEvent.location}
+              onPress={() => router.push(`/calendar/event/${sourceEvent.id}`)}
+            />
+          ) : null}
+          {item.type === 'message' ? (
+            <ListRow
+              variant="compact"
+              label="Contact"
+              rightText="Emma's teacher"
+              onPress={() => router.push('/home/follow-ups')}
+            />
+          ) : null}
         </GlassCard>
 
         <GlassCard>
@@ -122,12 +162,13 @@ export default function HomeItemDetailScreen() {
                 title: draftTitle,
                 date: '2026-02-20',
                 time: item.subtitle,
-                location: sourceEvent?.location ?? 'TBD',
+                location: sourceEvent?.location ?? 'No location set',
                 reminder: '1 hour before',
                 notes: draftNote,
                 repeat: 'None',
               });
               updateInbox(item.id, { type: 'event', subtitle: 'Converted to event' });
+              router.push('/calendar');
             } else {
               addTask({
                 title: draftTitle,
@@ -139,6 +180,7 @@ export default function HomeItemDetailScreen() {
                 note: draftNote,
               });
               updateInbox(item.id, { type: 'task', subtitle: 'Converted to task' });
+              router.push('/tasks');
             }
           }}
         />

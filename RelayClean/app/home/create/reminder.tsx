@@ -5,19 +5,19 @@ import { AppHeader } from '@/components/relay/AppHeader';
 import { PrimaryButton, SecondaryButton } from '@/components/relay/Buttons';
 import { FormField } from '@/components/relay/FormField';
 import { GlassCard } from '@/components/relay/GlassCard';
+import { LiquidBackdrop } from '@/components/relay/LiquidBackdrop';
 import { SectionHeader } from '@/components/relay/SectionHeader';
 import { ds } from '@/constants/design-system';
-import { useRelayStore } from '@/store/relay-store';
 
 export default function CreateReminderFromHomeScreen() {
   const router = useRouter() as any;
-  const { addTask } = useRelayStore();
   const [title, setTitle] = useState('');
   const [dueDate, setDueDate] = useState('Next week');
   const [assignedTo, setAssignedTo] = useState('');
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <LiquidBackdrop />
       <ScrollView contentContainerStyle={styles.content}>
         <AppHeader title="Create Reminder" subtitle="Gentle follow-through" onBack={() => router.back()} />
 
@@ -30,17 +30,18 @@ export default function CreateReminderFromHomeScreen() {
 
         <PrimaryButton
           label="Save reminder"
-          onPress={() => {
-            addTask({
-              title: title || 'Untitled reminder',
-              dueDate,
-              priority: 'medium',
-              category: 'Reminder',
-              assignedTo: assignedTo || undefined,
-              recurring: false,
-            });
-            router.replace('/(tabs)/tasks');
-          }}
+          onPress={() =>
+            router.push({
+              pathname: '/home/reminders/confirm',
+              params: {
+                mode: 'create',
+                title: title || 'Untitled reminder',
+                due: dueDate,
+                repeat: 'None',
+                assignedTo,
+              },
+            })
+          }
         />
         <SecondaryButton label="Cancel" onPress={() => router.back()} />
       </ScrollView>

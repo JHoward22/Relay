@@ -5,6 +5,7 @@ import { AppHeader } from '@/components/relay/AppHeader';
 import { PrimaryButton, SecondaryButton } from '@/components/relay/Buttons';
 import { FormField } from '@/components/relay/FormField';
 import { GlassCard } from '@/components/relay/GlassCard';
+import { LiquidBackdrop } from '@/components/relay/LiquidBackdrop';
 import { SectionHeader } from '@/components/relay/SectionHeader';
 import { ds } from '@/constants/design-system';
 import { useRelayStore } from '@/store/relay-store';
@@ -19,6 +20,7 @@ export default function CreateMessageFromHomeScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <LiquidBackdrop />
       <ScrollView contentContainerStyle={styles.content}>
         <AppHeader title="Create Follow-up" subtitle="Track waiting responses" onBack={() => router.back()} />
 
@@ -40,7 +42,7 @@ export default function CreateMessageFromHomeScreen() {
                 dueLabel,
               },
             ]);
-            router.replace('/home/inbox');
+            router.replace('/home/follow-ups');
           }}
         />
         <SecondaryButton label="Cancel" onPress={() => router.back()} />

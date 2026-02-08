@@ -5,6 +5,7 @@ import { AppHeader } from '@/components/relay/AppHeader';
 import { PrimaryButton } from '@/components/relay/Buttons';
 import { GlassCard } from '@/components/relay/GlassCard';
 import { ListRow } from '@/components/relay/ListRow';
+import { LiquidBackdrop } from '@/components/relay/LiquidBackdrop';
 import { SectionTitle } from '@/components/relay/SectionTitle';
 import { ds } from '@/constants/design-system';
 
@@ -26,6 +27,7 @@ export default function RelayProScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <LiquidBackdrop />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <AppHeader
           title="Relay Pro"
@@ -58,7 +60,7 @@ export default function RelayProScreen() {
           </View>
         </GlassCard>
 
-        <PrimaryButton label="Upgrade when you’re ready" onPress={() => router.back()} />
+        <PrimaryButton label="Upgrade when you’re ready" onPress={() => router.push('/pro/checkout')} />
       </ScrollView>
     </SafeAreaView>
   );

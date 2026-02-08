@@ -3,6 +3,7 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { PrimaryButton } from '@/components/relay/Buttons';
 import { GlassCard } from '@/components/relay/GlassCard';
+import { LiquidBackdrop } from '@/components/relay/LiquidBackdrop';
 import { ListRow } from '@/components/relay/ListRow';
 import { SectionTitle } from '@/components/relay/SectionTitle';
 import { ds } from '@/constants/design-system';
@@ -19,6 +20,7 @@ export default function OnboardingValueScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <LiquidBackdrop />
       <View style={styles.content}>
         <GlassCard>
           <SectionTitle title="What Relay helps with" />

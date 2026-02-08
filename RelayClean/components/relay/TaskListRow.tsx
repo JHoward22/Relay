@@ -2,32 +2,49 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, { Layout } from 'react-native-reanimated';
 import { ds } from '@/constants/design-system';
+import { BubbleChip } from './BubbleChip';
 
 type TaskListRowProps = {
   title: string;
   dueDate: string;
   completed: boolean;
+  assignee?: string;
+  priority?: 'low' | 'medium' | 'high';
   onPress: () => void;
   onToggle: () => void;
 };
 
-export function TaskListRow({ title, dueDate, completed, onPress, onToggle }: TaskListRowProps) {
+export function TaskListRow({
+  title,
+  dueDate,
+  completed,
+  assignee,
+  priority = 'medium',
+  onPress,
+  onToggle,
+}: TaskListRowProps) {
+  const priorityColor =
+    priority === 'high' ? '#EA7474' : priority === 'low' ? '#6AB88E' : '#F2A74A';
+
   return (
     <Animated.View layout={Layout.springify().damping(18)} style={styles.wrap}>
       <Pressable style={[styles.row, completed && styles.rowDone]} onPress={onPress}>
-        <Pressable
-          style={[styles.check, completed && styles.checkDone]}
-          onPress={(event) => {
-            event.stopPropagation();
-            onToggle();
-          }}
-        >
-          {completed ? <Text style={styles.tick}>✓</Text> : null}
-        </Pressable>
+        <View style={styles.checkWrap}>
+          <BubbleChip
+            icon={completed ? 'checkmark' : 'ellipse-outline'}
+            tone={completed ? 'success' : 'neutral'}
+            compact
+            onPress={onToggle}
+          />
+        </View>
 
         <View style={styles.textWrap}>
           <Text style={[styles.title, completed && styles.titleDone]}>{title}</Text>
-          <Text style={styles.meta}>{dueDate}</Text>
+          <View style={styles.metaRow}>
+            <Text style={styles.meta}>{dueDate}</Text>
+            <View style={[styles.priorityDot, { backgroundColor: priorityColor }]} />
+            {assignee ? <Text style={styles.assignee}>{assignee}</Text> : null}
+          </View>
         </View>
       </Pressable>
     </Animated.View>
@@ -39,39 +56,24 @@ const styles = StyleSheet.create({
     marginBottom: ds.spacing.s8,
   },
   row: {
-    borderRadius: ds.radius.card,
+    borderRadius: ds.radius.r16,
     borderWidth: 1,
-    borderColor: ds.colors.border,
-    backgroundColor: ds.colors.bgAlt,
+    borderColor: ds.colors.glassBorder,
+    backgroundColor: ds.colors.glassFill,
     paddingHorizontal: ds.spacing.s12,
     paddingVertical: ds.spacing.s12,
     flexDirection: 'row',
     alignItems: 'center',
     gap: ds.spacing.s12,
+    ...ds.shadow.soft,
   },
   rowDone: {
     opacity: 0.6,
   },
-  check: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    borderWidth: 1.5,
-    borderColor: ds.colors.secondary,
-    backgroundColor: '#FFFFFF',
+  checkWrap: {
+    width: 44,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  checkDone: {
-    backgroundColor: ds.colors.primary,
-    borderColor: ds.colors.primary,
-  },
-  tick: {
-    fontFamily: ds.font,
-    fontSize: 12,
-    lineHeight: 14,
-    color: '#FFFFFF',
-    fontWeight: '700',
   },
   textWrap: {
     flex: 1,
@@ -87,11 +89,28 @@ const styles = StyleSheet.create({
     textDecorationLine: 'line-through',
   },
   meta: {
-    marginTop: ds.spacing.s4,
     fontFamily: ds.font,
-    fontSize: ds.type.caption.fontSize,
-    lineHeight: ds.type.caption.lineHeight,
+    fontSize: 13,
+    lineHeight: 18,
     color: ds.colors.textMuted,
     fontWeight: '500',
+  },
+  metaRow: {
+    marginTop: ds.spacing.s4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ds.spacing.s8,
+  },
+  priorityDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+  },
+  assignee: {
+    fontFamily: ds.font,
+    fontSize: 13,
+    lineHeight: 18,
+    color: '#7090C6',
+    fontWeight: '600',
   },
 });

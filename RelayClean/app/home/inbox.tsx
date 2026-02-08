@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
 import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { AppHeader } from '@/components/relay/AppHeader';
+import { LiquidBackdrop } from '@/components/relay/LiquidBackdrop';
 import { SwipeInboxRow } from '@/components/relay/SwipeInboxRow';
 import { ds } from '@/constants/design-system';
 import { InboxFilter, useRelayStore } from '@/store/relay-store';
@@ -20,6 +21,7 @@ export default function HomeInboxScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <LiquidBackdrop />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <AppHeader
           title="Life Inbox"

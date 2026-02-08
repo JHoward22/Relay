@@ -4,6 +4,7 @@ import { SafeAreaView, ScrollView, StyleSheet, Switch } from 'react-native';
 import { AppHeader } from '@/components/relay/AppHeader';
 import { FormField } from '@/components/relay/FormField';
 import { GlassCard } from '@/components/relay/GlassCard';
+import { LiquidBackdrop } from '@/components/relay/LiquidBackdrop';
 import { ListRow } from '@/components/relay/ListRow';
 import { SectionHeader } from '@/components/relay/SectionHeader';
 import { ds } from '@/constants/design-system';
@@ -15,6 +16,7 @@ export default function NotificationSettingsScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <LiquidBackdrop />
       <ScrollView contentContainerStyle={styles.content}>
         <AppHeader title="Notifications" subtitle="Gentle timing and quiet hours" onBack={() => router.back()} />
 

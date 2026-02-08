@@ -3,6 +3,7 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { PrimaryButton } from '@/components/relay/Buttons';
 import { GlassCard } from '@/components/relay/GlassCard';
+import { LiquidBackdrop } from '@/components/relay/LiquidBackdrop';
 import { ds } from '@/constants/design-system';
 import { useOnboardingSession } from '@/hooks/use-onboarding-session';
 
@@ -12,11 +13,12 @@ export default function OnboardingCompleteScreen() {
 
   const handleGoHome = () => {
     completeOnboarding();
-    router.replace('/(tabs)');
+    router.replace('/');
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <LiquidBackdrop />
       <View style={styles.content}>
         <GlassCard blur>
           <Text style={styles.title}>Relay is ready when you are.</Text>

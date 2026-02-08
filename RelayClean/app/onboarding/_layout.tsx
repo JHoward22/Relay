@@ -6,7 +6,7 @@ export default function OnboardingLayout() {
   const { isComplete } = useOnboardingSession();
 
   if (isComplete) {
-    return <Redirect href="/(tabs)" />;
+    return <Redirect href="/" />;
   }
 
   return (
